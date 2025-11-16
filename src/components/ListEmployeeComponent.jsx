@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {listEmployees} from "../services/EmployeeService.js";
 
 /**
  * ListEmployeeComponent
@@ -6,40 +7,17 @@ import React from 'react';
  * @constructor
  */
 const ListEmployeeComponent = () => {
-    const placeholderData = [
-        {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Doe",
-            "email": "johndoe@gmail.com",
-            "phone": "123-456-7890"
 
-        },
-        {
-            "id": 2,
-            "firstName": "Jane",
-            "lastName": "Doe",
-            "email": "janedoe@gmail.com",
-            "phone": "246-810-1214"
+    const [employees, setEmployees] = useState([]);
 
-        },
-        {
-            "id": 3,
-            "firstName": "Timmy",
-            "lastName": "Tough-Knuckles",
-            "email": "timmyalpha67@gmail.com",
-            "phone": "369-121-5182"
-
-        },
-        {
-            "id": 4,
-            "firstName": "Reisa",
-            "lastName": "Uzawa",
-            "email": "uzawareisa67@gmail.com",
-            "phone": "481-216-2432"
-
-        }
-    ];
+    useEffect(() => {
+        listEmployees().then((response) => {
+            console.log("Employees fetched successfully: ", response.data);
+            setEmployees(response.data)
+        }).catch((error) => {
+            console.error("Error fetching employees: ", error);
+        });
+    }, []);
     return (
         <div className={"container"}>
             <h2 className={"text-center"}>List of Employees</h2>
@@ -55,7 +33,7 @@ const ListEmployeeComponent = () => {
                 </thead>
                 <tbody>
                 {
-                    placeholderData.map(
+                    employees.map(
                         (employee) =>
                             <tr key={employee.id}>
                                 <td>{employee.id}</td>
