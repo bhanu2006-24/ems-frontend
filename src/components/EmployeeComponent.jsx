@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {createEmployee} from "../services/EmployeeService.js";
+import React, {useEffect, useState} from 'react';
+import {createEmployee, getEmployee} from "../services/EmployeeService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 /**
@@ -28,6 +28,20 @@ const EmployeeComponent = () => {
 
     // Get the employee ID from the URL parameters
     const {id} = useParams();
+
+    // Fetch employee details when the component mounts IF id is present (means update)
+    useEffect(() => {
+        if (id) {
+            getEmployee(id).then((response) => {
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setEmail(response.data.email);
+                setPhone(response.data.phone);
+            }).catch((error) => {
+                console.error("Error fetching employee details: ", error);
+            });
+        }
+    }, [id])
 
     // Function to validate the form fields
     function validateForm() {
