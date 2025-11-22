@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {createEmployee} from "../services/EmployeeService.js";
+import React, {useEffect, useState} from 'react';
+import {createEmployee, getEmployee, updateEmployee} from "../services/EmployeeService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 /**
@@ -28,6 +28,20 @@ const EmployeeComponent = () => {
 
     // Get the employee ID from the URL parameters
     const {id} = useParams();
+
+    // Fetch employee details when the component mounts IF id is present (means update)
+    useEffect(() => {
+        if (id) {
+            getEmployee(id).then((response) => {
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setEmail(response.data.email);
+                setPhone(response.data.phone);
+            }).catch((error) => {
+                console.error("Error fetching employee details: ", error);
+            });
+        }
+    }, [id])
 
     // Function to validate the form fields
     function validateForm() {
@@ -74,7 +88,7 @@ const EmployeeComponent = () => {
     }
 
     // Function to save the employee details and send POST request to the backend
-    const saveEmployee = (e) => {
+    const saveOrUpdateEmployee = (e) => {
         e.preventDefault(); // Prevent the default form submission behavior
 
         // Create an employee object with the entered details
@@ -84,13 +98,23 @@ const EmployeeComponent = () => {
 
         // Validate the form fields before sending the POST request
         if (validateForm()) {
-            // Send POST request to the backend to save the employee
-            createEmployee(employee).then((response) => {
-                console.log("Employee saved successfully: ", response.data);
-                navigator('/employees'); // Navigate back to the list of employees
-            }).catch((error) => {
-                console.error("Error saving employee: ", error);
-            });
+            if (id) {
+                // Send PUT request to the backend to update the employee
+                updateEmployee(id, employee).then((response) => {
+                    console.log("Employee updated successfully: ", response.data);
+                    navigator('/employees');
+                }).catch((error) => {
+                    console.error("Error updating employee: ", error);
+                });
+            } else {
+                // Send POST request to the backend to save the employee
+                createEmployee(employee).then((response) => {
+                    console.log("Employee saved successfully: ", response.data);
+                    navigator('/employees'); // Navigate back to the list of employees
+                }).catch((error) => {
+                    console.error("Error saving employee: ", error);
+                });
+            }
         }
     }
 
@@ -146,7 +170,7 @@ const EmployeeComponent = () => {
                                 {error.phone && <div className={"invalid-feedback"}>{error.phone}</div>}
                             </div>
                             <button type={"submit"} className={"btn btn-success"}
-                                    onClick={saveEmployee}>Submit
+                                    onClick={saveOrUpdateEmployee}>Submit
                             </button>
                         </form>
                     </div>
