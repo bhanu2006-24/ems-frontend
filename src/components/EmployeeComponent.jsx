@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {createEmployee} from "../services/EmployeeService.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 /**
  * EmployeeComponent
@@ -25,6 +25,9 @@ const EmployeeComponent = () => {
 
     // Hook to navigate between pages
     const navigator = useNavigate();
+
+    // Get the employee ID from the URL parameters
+    const {id} = useParams();
 
     // Function to validate the form fields
     function validateForm() {
@@ -91,12 +94,20 @@ const EmployeeComponent = () => {
         }
     }
 
+    function setPageTitle() {
+        if (id) {
+            return <h2 className={"text-center"}>Update Employee</h2>;
+        } else {
+            return <h2 className={"text-center"}>Add Employee</h2>;
+        }
+    }
+
     return (
         <div className={"container"}>
             <div className={"row"}>
                 <div className={"card col-md-6 offset-md-3 mt-5"}>
                     <div className={"card-header"}>
-                        <h2 className={"text-center"}>Add Employee</h2>
+                        {setPageTitle()}
                     </div>
                     <div className={"card-body"}>
                         <form>
