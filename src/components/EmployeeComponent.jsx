@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {createEmployee} from "../services/EmployeeService.js";
+import {useNavigate} from "react-router-dom";
 
 /**
  * EmployeeComponent
@@ -7,20 +9,31 @@ import React, {useState} from 'react';
  */
 const EmployeeComponent = () => {
 
+    // State variables to hold the employee details
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
 
+    // Hook to navigate between pages
+    const navigator = useNavigate();
+
     // Function to save the employee details and send POST request to the backend
     const saveEmployee = (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent the default form submission behavior
 
+        // Create an employee object with the entered details
         const employee = {firstName, lastName, email, phone};
         console.log("Saving employee with below details");
-        console.log(employee);
+        console.log(employee); // Log the employee object to the console
 
-        //TODO - Send POST request to backend
+        // Send POST request to the backend to save the employee
+        createEmployee(employee).then((response) => {
+            console.log("Employee saved successfully: ", response.data);
+            navigator('/employees'); // Navigate back to the list of employees
+        }).catch((error) => {
+            console.error("Error saving employee: ", error);
+        });
     }
 
     return (
