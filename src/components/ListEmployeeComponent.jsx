@@ -35,6 +35,10 @@ const ListEmployeeComponent = () => {
         navigator(`/edit-employee/${id}`);
     }
 
+    function removeEmployee(id) {
+        //TODO: Implement delete employee functionality
+    }
+
     return (
         <div className={"container"}>
             <h2 className={"text-center"}>List of Employees</h2>
@@ -65,6 +69,9 @@ const ListEmployeeComponent = () => {
                                 <td>
                                     <button className={"btn btn-info"}
                                             onClick={() => updateEmployee(employee.id)}>Update
+                                    </button>
+                                    <button className={"btn btn-danger"}
+                                            onClick={() => removeEmployee(employee.id)}>Delete
                                     </button>
                                 </td>
                             </tr>
