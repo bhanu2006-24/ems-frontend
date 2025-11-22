@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {listEmployees} from "../services/EmployeeService.js";
+import {useNavigate} from "react-router-dom";
 
 /**
  * ListEmployeeComponent
@@ -8,8 +9,13 @@ import {listEmployees} from "../services/EmployeeService.js";
  */
 const ListEmployeeComponent = () => {
 
+    // State to hold the list of employees
     const [employees, setEmployees] = useState([]);
 
+    // Hook to navigate between pages
+    const navigator = useNavigate();
+
+    // Fetch employees when the component mounts
     useEffect(() => {
         listEmployees().then((response) => {
             console.log("Employees fetched successfully: ", response.data);
@@ -18,9 +24,18 @@ const ListEmployeeComponent = () => {
             console.error("Error fetching employees: ", error);
         });
     }, []);
+
+    // Function to add a new employee
+    function addNewEmployee() {
+        navigator('/add-employee'); // Navigate to the add employee page
+    }
+
     return (
         <div className={"container"}>
             <h2 className={"text-center"}>List of Employees</h2>
+            <button className={"btn btn-primary mb-2"} onClick={addNewEmployee}>
+                Add Employee
+            </button>
             <table className={"table table-striped table-bordered"}>
                 <thead>
                 <tr>
