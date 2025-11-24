@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {deleteEmployee, listEmployees} from "../services/EmployeeService.js";
-import {useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { deleteEmployee, listEmployees } from "../services/EmployeeService.js";
+import { useNavigate } from "react-router-dom";
 
 /**
  * ListEmployeeComponent
@@ -9,8 +9,15 @@ import {useNavigate} from "react-router-dom";
  */
 const ListEmployeeComponent = () => {
 
+    // Dummy employees for testing
+    const dummyEmployees = [
+        { id: 1, firstName: "John", lastName: "Doe", email: "john.doe@example.com", phone: "555-0101" },
+        { id: 2, firstName: "Sarah", lastName: "Smith", email: "sarah.smith@example.com", phone: "555-0102" },
+        { id: 3, firstName: "Michael", lastName: "Johnson", email: "michael.j@example.com", phone: "555-0103" }
+    ];
+
     // State to hold the list of employees
-    const [employees, setEmployees] = useState([]);
+    const [employees, setEmployees] = useState(dummyEmployees);
 
     // Hook to navigate between pages
     const navigator = useNavigate();
@@ -23,10 +30,11 @@ const ListEmployeeComponent = () => {
             setEmployees(response.data)
         }).catch((error) => {
             console.error("Error fetching employees: ", error);
+            // Keep dummy data if backend fails
         });
     }
 
-// Fetch employees when the component mounts
+    // Fetch employees when the component mounts
     useEffect(() => {
         getAllEmployees();
     }, []);
@@ -34,6 +42,11 @@ const ListEmployeeComponent = () => {
     // Function to add a new employee
     function addNewEmployee() {
         navigator('/add-employee'); // Navigate to the add employee page
+    }
+
+    // Function to view employee details
+    function viewEmployee(id) {
+        navigator(`/view-employee/${id}`);
     }
 
     // Function to update an employee
@@ -59,36 +72,39 @@ const ListEmployeeComponent = () => {
             </button>
             <table className={"table table-striped table-bordered"}>
                 <thead>
-                <tr>
-                    <th>Employee ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th style={{ width: '10%' }}>Employee ID</th>
+                        <th style={{ width: '15%' }}>First Name</th>
+                        <th style={{ width: '15%' }}>Last Name</th>
+                        <th style={{ width: '25%' }}>Email</th>
+                        <th style={{ width: '15%' }}>Phone</th>
+                        <th style={{ width: '20%' }}>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {
-                    employees.map(
-                        (employee) =>
-                            <tr key={employee.id}>
-                                <td>{employee.id}</td>
-                                <td>{employee.firstName}</td>
-                                <td>{employee.lastName}</td>
-                                <td>{employee.email}</td>
-                                <td>{employee.phone}</td>
-                                <td>
-                                    <button className={"btn btn-info"}
-                                            onClick={() => updateEmployee(employee.id)}>Update
-                                    </button>
-                                    <button className={"btn btn-danger"}
+                    {
+                        employees.map(
+                            (employee) =>
+                                <tr key={employee.id}>
+                                    <td>{employee.id}</td>
+                                    <td>{employee.firstName}</td>
+                                    <td>{employee.lastName}</td>
+                                    <td style={{ wordBreak: 'break-word' }}>{employee.email}</td>
+                                    <td>{employee.phone}</td>
+                                    <td>
+                                        <button className={"btn btn-info btn-sm me-1"}
+                                            onClick={() => viewEmployee(employee.id)}>View
+                                        </button>
+                                        <button className={"btn btn-warning btn-sm me-1"}
+                                            onClick={() => updateEmployee(employee.id)}>Edit
+                                        </button>
+                                        <button className={"btn btn-danger btn-sm"}
                                             onClick={() => removeEmployee(employee.id)}>Delete
-                                    </button>
-                                </td>
-                            </tr>
-                    )
-                }
+                                        </button>
+                                    </td>
+                                </tr>
+                        )
+                    }
                 </tbody>
             </table>
         </div>
