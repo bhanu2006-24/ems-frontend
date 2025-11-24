@@ -1,9 +1,1 @@
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: darkslategray;
-    text-align: center;
-    color: white;
-    padding: 10px 0;
-}
+/* No custom App.css needed - using index.css for all styles */

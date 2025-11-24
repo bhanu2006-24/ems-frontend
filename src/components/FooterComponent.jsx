@@ -1,19 +1,20 @@
 import React from 'react';
 
-/**
- * FooterComponent for Footer in the Application
- * @returns {React.JSX.Element}
- * @constructor
- */
 const FooterComponent = () => {
     return (
-        <div>
-            <footer className={"footer"}>
-                <span className={"font-monospace"}>
-                    All Rights Reserved 2025 by J.H. Web Development
-                </span>
-            </footer>
-        </div>
+        <footer style={{
+            backgroundColor: 'var(--bg-secondary)',
+            borderTop: '1px solid var(--border-default)',
+            padding: '12px 0',
+            marginTop: '48px',
+            textAlign: 'center',
+            color: 'var(--text-secondary)',
+            fontSize: '12px'
+        }}>
+            <div className="container">
+                © {new Date().getFullYear()} Employee Management System
+            </div>
+        </footer>
     );
 };
 

@@ -1,15 +1,17 @@
 import './App.css'
+import './index.css'
 import HeaderComponent from "./components/HeaderComponent.jsx";
 import ListEmployeeComponent from "./components/ListEmployeeComponent.jsx";
 import EmployeeComponent from "./components/EmployeeComponent.jsx";
 import EmployeeDetailsComponent from "./components/EmployeeDetailsComponent.jsx";
 import FooterComponent from "./components/FooterComponent.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 function App() {
 
     return (
-        <>
+        <ThemeProvider>
             <BrowserRouter>
                 <HeaderComponent />
                 <Routes>
@@ -26,7 +28,7 @@ function App() {
                 </Routes>
                 <FooterComponent />
             </BrowserRouter>
-        </>
+        </ThemeProvider>
     )
 }
 
