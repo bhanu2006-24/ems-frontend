@@ -14,18 +14,20 @@ function App() {
         <ThemeProvider>
             <BrowserRouter>
                 <HeaderComponent />
-                <Routes>
-                    {/* http://localhost:3000 */}
-                    <Route path={"/"} element={<ListEmployeeComponent />} />
-                    {/* http://localhost:3000/employees */}
-                    <Route path={"/employees"} element={<ListEmployeeComponent />} />
-                    {/* http://localhost:3000/view-employee/{id} */}
-                    <Route path={"/view-employee/:id"} element={<EmployeeDetailsComponent />} />
-                    {/* http://localhost:3000/add-employee */}
-                    <Route path={"/add-employee"} element={<EmployeeComponent />} />
-                    {/* http://localhost:3000/edit-employee/{id} */}
-                    <Route path={"/edit-employee/:id"} element={<EmployeeComponent />} />
-                </Routes>
+                <main>
+                    <Routes>
+                        {/* http://localhost:3000 */}
+                        <Route path={"/"} element={<ListEmployeeComponent />} />
+                        {/* http://localhost:3000/employees */}
+                        <Route path={"/employees"} element={<ListEmployeeComponent />} />
+                        {/* http://localhost:3000/view-employee/{id} */}
+                        <Route path={"/view-employee/:id"} element={<EmployeeDetailsComponent />} />
+                        {/* http://localhost:3000/add-employee */}
+                        <Route path={"/add-employee"} element={<EmployeeComponent />} />
+                        {/* http://localhost:3000/edit-employee/{id} */}
+                        <Route path={"/edit-employee/:id"} element={<EmployeeComponent />} />
+                    </Routes>
+                </main>
                 <FooterComponent />
             </BrowserRouter>
         </ThemeProvider>
