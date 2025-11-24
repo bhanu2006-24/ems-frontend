@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { deleteEmployee, listEmployees } from "../services/EmployeeService.js";
-import { useNavigate } from "react-router-dom";
+import { deleteEmployee, listEmployees } from '../services/EmployeeService.js';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import ConfirmModal from './ConfirmModal.jsx';
 
-/**
- * ListEmployeeComponent
- * @returns {React.JSX.Element}
- * @constructor
- */
-const ListEmployeeComponent = () => {
+function ListEmployeeComponent() {
 
-    // Dummy employees for testing
-    const dummyEmployees = [
-        { id: 1, firstName: "John", lastName: "Doe", email: "john.doe@example.com", phone: "555-0101" },
-        { id: 2, firstName: "Sarah", lastName: "Smith", email: "sarah.smith@example.com", phone: "555-0102" },
-        { id: 3, firstName: "Michael", lastName: "Johnson", email: "michael.j@example.com", phone: "555-0103" }
-    ];
+    // Dummy data for preview (commented out - uncomment if backend is not available)
+    // const dummyEmployees = [
+    //     { id: 1, firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', phone: '555-0101' },
+    //     { id: 2, firstName: 'Sarah', lastName: 'Smith', email: 'sarah.smith@example.com', phone: '555-0102' },
+    //     { id: 3, firstName: 'Michael', lastName: 'Johnson', email: 'michael.j@example.com', phone: '555-0103' }
+    // ];
 
     // State to hold the list of employees
-    const [employees, setEmployees] = useState(dummyEmployees);
+    const [employees, setEmployees] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [employeeToDelete, setEmployeeToDelete] = useState(null);
 
     // Hook to navigate between pages
     const navigator = useNavigate();
@@ -26,7 +25,6 @@ const ListEmployeeComponent = () => {
     // Must go before useEffect so ESLint doesn't complain
     function getAllEmployees() {
         listEmployees().then((response) => {
-            console.log("Employees fetched successfully: ", response.data);
             setEmployees(response.data)
         }).catch((error) => {
             console.error("Error fetching employees: ", error);
@@ -40,27 +38,42 @@ const ListEmployeeComponent = () => {
     }, []);
 
     // Function to add a new employee
-    function addNewEmployee() {
-        navigator('/add-employee'); // Navigate to the add employee page
+    const addNewEmployee = () => {
+        navigator('/add-employee')
     }
 
     // Function to view employee details
-    function viewEmployee(id) {
-        navigator(`/view-employee/${id}`);
+    const viewEmployee = (id) => {
+        navigator(`/ view - employee / ${id} `);
     }
 
     // Function to update an employee
-    function updateEmployee(id) {
-        navigator(`/edit-employee/${id}`);
+    const updateEmployee = (id) => {
+        navigator(`/ edit - employee / ${id} `);
     }
 
-    function removeEmployee(id) {
+    // Open confirmation modal
+    const confirmDelete = (id) => {
+        const employee = employees.find(emp => emp.id === id);
+        setEmployeeToDelete(employee);
+        setIsModalOpen(true);
+    }
+
+    // Actually delete the employee
+    function removeEmployee() {
+        if (!employeeToDelete) return;
+
+        const id = employeeToDelete.id;
         console.log("Removing employee with ID: ", id);
         deleteEmployee(id).then((response) => {
             console.log("Employee removed successfully. Status: ", response.status);
+            toast.success('Employee deleted successfully!');
             getAllEmployees();
+            setIsModalOpen(false); // Close modal on success
+            setEmployeeToDelete(null); // Clear employee to delete
         }).catch((error) => {
             console.error("Error removing employee: ", error);
+            toast.error('Failed to delete employee');
         });
     }
 
@@ -99,7 +112,7 @@ const ListEmployeeComponent = () => {
                                             onClick={() => updateEmployee(employee.id)}>Edit
                                         </button>
                                         <button className={"btn btn-danger btn-sm"}
-                                            onClick={() => removeEmployee(employee.id)}>Delete
+                                            onClick={() => confirmDelete(employee.id)}>Delete
                                         </button>
                                     </td>
                                 </tr>
@@ -107,8 +120,23 @@ const ListEmployeeComponent = () => {
                     }
                 </tbody>
             </table>
+
+            {/* Confirmation Modal */}
+            <ConfirmModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={removeEmployee}
+                title="Delete Employee"
+                message={
+                    employeeToDelete
+                        ? `Are you sure you want to delete ${employeeToDelete.firstName} ${employeeToDelete.lastName}? This action cannot be undone.`
+                        : 'Are you sure you want to delete this employee?'
+                }
+                confirmText="Delete"
+                cancelText="Cancel"
+            />
         </div>
-    );
-};
+    )
+}
 
 export default ListEmployeeComponent;

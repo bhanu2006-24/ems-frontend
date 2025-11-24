@@ -1,5 +1,5 @@
-import './App.css'
 import './index.css'
+import 'react-toastify/dist/ReactToastify.css'
 import HeaderComponent from "./components/HeaderComponent.jsx";
 import ListEmployeeComponent from "./components/ListEmployeeComponent.jsx";
 import EmployeeComponent from "./components/EmployeeComponent.jsx";
@@ -7,6 +7,7 @@ import EmployeeDetailsComponent from "./components/EmployeeDetailsComponent.jsx"
 import FooterComponent from "./components/FooterComponent.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -29,6 +30,18 @@ function App() {
                     </Routes>
                 </main>
                 <FooterComponent />
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                />
             </BrowserRouter>
         </ThemeProvider>
     )
