@@ -138,13 +138,13 @@ h2 {
 
 .btn-primary {
     color: #ffffff !important;
-    background-color: var(--btn-secondary-bg) !important;
-    border-color: var(--border-default) !important;
+    background-color: var(--btn-primary-bg) !important;
+    border-color: rgba(27, 31, 36, 0.15) !important;
     box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1);
 }
 
 .btn-primary:hover {
-    background-color: var(--btn-secondary-hover) !important;
+    background-color: var(--btn-primary-hover) !important;
 }
 
 /* All secondary buttons - gray with border (Override bright colors) */
@@ -295,6 +295,7 @@ h2 {
     max-width: 1280px;
     margin: 0 auto;
     padding: 24px;
+    background-color: transparent;
 }
 
 .text-center {
@@ -356,10 +357,23 @@ h2 {
 .navbar-brand {
     font-size: 16px;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     text-decoration: none;
 }
 
 .navbar-brand:hover {
-    color: var(--text-link);
+    color: var(--text-link) !important;
+}
+
+.navbar a:not(.navbar-brand) {
+    padding: 5px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border-default);
+    background-color: var(--btn-secondary-bg);
+    transition: all 0.2s ease;
+}
+
+.navbar a:not(.navbar-brand):hover {
+    background-color: var(--btn-secondary-hover);
+    text-decoration: none;
 }
