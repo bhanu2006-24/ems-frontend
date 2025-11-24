@@ -69,6 +69,12 @@
     box-sizing: border-box;
 }
 
+/* Disable transitions on page load to prevent flash */
+.no-transition,
+.no-transition * {
+    transition: none !important;
+}
+
 html {
     background-color: var(--bg-primary) !important;
 }
