@@ -85,7 +85,6 @@ body {
     line-height: 1.5;
     color: var(--text-primary) !important;
     background-color: var(--bg-primary) !important;
-    transition: background-color 200ms ease, color 200ms ease;
     margin: 0 !important;
     padding: 0 !important;
     min-height: 100vh;
@@ -144,7 +143,7 @@ h2 {
     user-select: none;
     border: 1px solid;
     border-radius: 6px;
-    transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    transition: transform 0.2s cubic-bezier(0.3, 0, 0.5, 1), box-shadow 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     text-decoration: none;
 }
 
@@ -288,7 +287,7 @@ h2 {
     border-radius: 6px !important;
     outline: none;
     box-shadow: inset 0 1px 0 rgba(208, 215, 222, 0.2);
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .form-control:hover {
@@ -308,7 +307,6 @@ h2 {
     font-weight: 600;
     font-size: 14px;
     color: var(--text-primary) !important;
-    transition: color 0.2s ease;
 }
 
 .invalid-feedback {
@@ -371,7 +369,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .theme-toggle:hover {
@@ -399,7 +397,7 @@ h2 {
     font-weight: 600;
     color: var(--text-primary) !important;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
 .navbar-brand:hover {
@@ -412,7 +410,7 @@ h2 {
     border-radius: 6px;
     border: 1px solid var(--border-default);
     background-color: var(--btn-secondary-bg);
-    transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    transition: transform 0.2s cubic-bezier(0.3, 0, 0.5, 1), box-shadow 0.2s cubic-bezier(0.3, 0, 0.5, 1), border-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
 }
 
 .navbar a:not(.navbar-brand):hover {
