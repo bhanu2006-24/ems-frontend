@@ -151,6 +151,8 @@ h2 {
 
 .btn-primary:hover {
     background-color: var(--btn-primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(35, 134, 54, 0.1);
 }
 
 /* All secondary buttons - gray with border (Override bright colors) */
@@ -168,6 +170,8 @@ h2 {
 .btn-warning:hover {
     background-color: var(--btn-secondary-hover) !important;
     border-color: var(--border-default) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-danger {
@@ -181,6 +185,8 @@ h2 {
     color: #ffffff !important;
     background-color: var(--btn-danger-bg) !important;
     border-color: var(--danger-emphasis) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(218, 54, 51, 0.3);
 }
 
 .btn-sm {
@@ -191,6 +197,11 @@ h2 {
 .btn:active {
     transform: scale(0.97);
     box-shadow: none;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.2);
 }
 
 /* ============================================
@@ -245,7 +256,7 @@ h2 {
 
 .card-header {
     padding: 16px;
-    background-color: var(--bg-tertiary) !important;
+    background-color: transparent !important;
     border-bottom: 1px solid var(--border-default);
     color: var(--text-primary) !important;
 }
@@ -271,13 +282,18 @@ h2 {
     border-radius: 6px !important;
     outline: none;
     box-shadow: inset 0 1px 0 rgba(208, 215, 222, 0.2);
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.form-control:hover {
+    border-color: var(--accent-subtle) !important;
 }
 
 .form-control:focus {
     border-color: var(--accent-emphasis) !important;
-    box-shadow: inset 0 0 0 1px var(--accent-emphasis) !important;
+    box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1), inset 0 0 0 1px var(--accent-emphasis) !important;
     background-color: var(--bg-primary) !important;
+    transform: scale(1.01);
 }
 
 .form-label {
@@ -286,6 +302,7 @@ h2 {
     font-weight: 600;
     font-size: 14px;
     color: var(--text-primary) !important;
+    transition: color 0.2s ease;
 }
 
 .invalid-feedback {
@@ -353,6 +370,12 @@ h2 {
 
 .theme-toggle:hover {
     background-color: var(--bg-tertiary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
 }
 
 /* ============================================
@@ -370,10 +393,12 @@ h2 {
     font-weight: 600;
     color: var(--text-primary) !important;
     text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .navbar-brand:hover {
     color: var(--text-link) !important;
+    transform: translateX(2px);
 }
 
 .navbar a:not(.navbar-brand) {
@@ -381,10 +406,17 @@ h2 {
     border-radius: 6px;
     border: 1px solid var(--border-default);
     background-color: var(--btn-secondary-bg);
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
 }
 
 .navbar a:not(.navbar-brand):hover {
     background-color: var(--btn-secondary-hover);
     text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: var(--accent-emphasis);
+}
+
+.navbar a:not(.navbar-brand):active {
+    transform: scale(0.97);
 }
